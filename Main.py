@@ -127,7 +127,6 @@ class Add_lo():
         add_button = Button(loan_add, text="Добавить в базу данных", command=add_to_db)
         add_button.pack(padx=10, pady=8)
 
-
 class Show():
     def __init__(self):
         def open_lo_add():
@@ -565,18 +564,32 @@ def login():
     username = login_entry.get()
     password = password_entry.get()
 
-    if username == "1" and password == "1":
-        messagebox.showinfo("Успешная авторизация", "Вы успешно авторизованы!")
+    conn = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='22345267',
+        database='loan_db'
+    )
+
+    cursor = conn.cursor(dictionary=True)
+    query = "SELECT * FROM employees WHERE login = %s AND password = %s"
+    cursor.execute(query, (username, password))
+    user = cursor.fetchone()
+    cursor.close()
+
+    if user:
+        # Успешная авторизация
+        messagebox.showinfo("Успех", "Авторизация успешна!")
         show = Show()
         root.destroy()
     else:
-        messagebox.showerror("Ошибка авторизации", "Неправильный логин или пароль.")
-
+        # Неверный логин или пароль
+        messagebox.showerror("Ошибка", "Неверный логин или пароль.")
 
 root = Tk()
 root.title("Авторизация.")
 root['bg'] = '#fafafa'
-root.geometry('450x230')
+root.geometry('450x200')
 root.resizable(width=False, height=False)
 
 main_label = Label(root, text='Авторизация', font='Arial 15 bold', bg='#fafafa')
