@@ -247,6 +247,12 @@ class Show():
                         table2.insert('', tkinter.END, values=row)
 
         def delete_en():
+            selected_items = table1.selection()
+
+            if not selected_items:
+                messagebox.showwarning("Предупреждение", "Пожалуйста, выберите элемент для удаления.")
+                return  # Прерываем выполнение функции, если элемент не выбран
+
             selected_item = table1.selection()[0]
             item_values = table1.item(selected_item)["values"]
             en_id = item_values[0]
@@ -280,6 +286,12 @@ class Show():
                 messagebox.showinfo("Удаление", "Удаление отменено.")
 
         def delete_lo():
+            selected_items = table2.selection()
+
+            if not selected_items:
+                messagebox.showwarning("Предупреждение", "Пожалуйста, выберите элемент для удаления.")
+                return  # Прерываем выполнение функции, если элемент не выбран
+
             selected_item = table2.selection()[0]
             item_values = table2.item(selected_item)["values"]
             lo_id = item_values[0]
@@ -313,6 +325,12 @@ class Show():
                 messagebox.showinfo("Удаление", "Удаление отменено.")
 
         def update_en():
+            selected_items = table1.selection()
+
+            if not selected_items:
+                messagebox.showwarning("Предупреждение", "Пожалуйста, выберите элемент для изменеия.")
+                return  # Прерываем выполнение функции, если элемент не выбран
+
             selected_item = table1.selection()[0]
 
             item_values = table1.item(selected_item)["values"]
@@ -382,6 +400,12 @@ class Show():
             add_button.pack(padx=10, pady=8)
 
         def update_lo():
+            selected_items = table2.selection()
+
+            if not selected_items:
+                messagebox.showwarning("Предупреждение", "Пожалуйста, выберите элемент для изменеия.")
+                return  # Прерываем выполнение функции, если элемент не выбран
+
             selected_item = table2.selection()[0]
 
             item_values = table2.item(selected_item)["values"]
@@ -560,6 +584,7 @@ class Show():
 
         tab_control.pack(expand=1, fill='both')
 
+
 def login():
     username = login_entry.get()
     password = password_entry.get()
@@ -576,6 +601,7 @@ def login():
     cursor.execute(query, (username, password))
     user = cursor.fetchone()
     cursor.close()
+    conn.close()
 
     if user:
         # Успешная авторизация
@@ -611,5 +637,3 @@ login_button = Button(root, text="Войти", command=login)
 login_button.pack(padx=10, pady=8)
 
 root.mainloop()
-
-
