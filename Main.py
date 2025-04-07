@@ -83,7 +83,7 @@ class Add_lo():
 
             # Создание курсора для выполнения SQL-запросов
             cursor = conn.cursor()
-            
+
             # Операция проверк исуществования клиента
             cursor.execute("SELECT COUNT(*) FROM legal_entities WHERE entitie_id = %s", (en_id,))
             client_exists = cursor.fetchone()[0]
@@ -424,39 +424,47 @@ class Show():
             term = item_values[4]
 
             def update():
-                    responce = messagebox.askyesno(title='Подтверждение', message='Вы действительно хотите изменить запись?')
-                    if responce:
-                        upd_en_id = en_id_entry.get()
-                        upd_amount = amount_entry.get()
-                        upd_percent = percent_entry.get()
-                        upd_term = term_entry.get()
+                    upd_en_id = en_id_entry.get()
+                    upd_amount = amount_entry.get()
+                    upd_percent = percent_entry.get()
+                    upd_term = term_entry.get()
 
-                        # Установка соединения с базой данных MySQL
-                        conn = mysql.connector.connect(
-                            host='localhost',
-                            user='root',
-                            password='22345267',
-                            database='loan_db'
-                        )
+                    # Установка соединения с базой данных MySQL
+                    conn = mysql.connector.connect(
+                        host='localhost',
+                        user='root',
+                        password='22345267',
+                        database='loan_db'
+                    )
 
-                        # Создание курсора для выполнения SQL-запросов
-                        cursor1 = conn.cursor()
+                    # Создание курсора для выполнения SQL-запросов
+                    cursor1 = conn.cursor()
 
-                        # Выполнение SQL-запроса для удаления записи из таблицы
-                        command = ("UPDATE loans SET entitie_id = %s, amount = %s, percent = %s, term = %s WHERE loan_id = %s")
-                        cursor1.execute(command, (upd_en_id, upd_amount, upd_percent, upd_term, lo_id))
+                    # Операция проверк исуществования клиента
+                    cursor1.execute("SELECT COUNT(*) FROM legal_entities WHERE entitie_id = %s", (upd_en_id,))
+                    client_exists = cursor1.fetchone()[0]
+
+                    if client_exists == 0:
+                        messagebox.showerror("Ошибка", "Клиент с указанным ID не существует.")
+
+                    else:
+                        responce = messagebox.askyesno(title='Подтверждение', message='Вы действительно хотите изменить запись?')
+                        if responce:
+                            # Выполнение SQL-запроса для удаления записи из таблицы
+                            command = ("UPDATE loans SET entitie_id = %s, amount = %s, percent = %s, term = %s WHERE loan_id = %s")
+                            cursor1.execute(command, (upd_en_id, upd_amount, upd_percent, upd_term, lo_id))
+
+                            messagebox.showinfo("Изменение.", "Запись успешно обновлена.")
+
+                            loan_upd.destroy()
 
                         # Применение изменений
                         conn.commit()
 
-                        # Закрытие соединения с базой данных
-                        conn.close()
-
-                        messagebox.showinfo("Изменение.", "Запись успешно обновлена.")
-
                         update_treeview()
 
-                        loan_upd.destroy()
+                        # Закрытие соединения с базой данных
+                        conn.close()
 
             loan_upd = Tk()
             loan_upd.title("Изменение кредита.")
