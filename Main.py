@@ -83,20 +83,28 @@ class Add_lo():
 
             # Создание курсора для выполнения SQL-запросов
             cursor = conn.cursor()
+            
+            # Операция проверк исуществования клиента
+            cursor.execute("SELECT COUNT(*) FROM legal_entities WHERE entitie_id = %s", (en_id,))
+            client_exists = cursor.fetchone()[0]
 
-            # Выполнение SQL-запроса для добавления данных в таблицу legal_entities
-            cursor.execute(
-                "INSERT INTO loans (entitie_id, amount, percent, term)"
-                "VALUES (%s, %s, %s, %s)",
-                (en_id, amount, percent, term))
+            if client_exists == 0:
+                messagebox.showerror("Ошибка", "Клиент с указанным ID не существует.")
+
+            else:
+                # Выполнение SQL-запроса для добавления данных в таблицу legal_entities
+                cursor.execute(
+                    "INSERT INTO loans (entitie_id, amount, percent, term)"
+                    "VALUES (%s, %s, %s, %s)",
+                    (en_id, amount, percent, term))
+
+                messagebox.showinfo("Добавление.", "Запись занесена в базу данных.")
 
             # Применение изменений
             conn.commit()
 
             # Закрытие соединения с базой данных
             conn.close()
-
-            messagebox.showinfo("Добавление.", "Запись занесена в базу данных.")
 
         loan_add = Tk()
         loan_add.title("Добавление кредита.")
@@ -637,3 +645,5 @@ login_button = Button(root, text="Войти", command=login)
 login_button.pack(padx=10, pady=8)
 
 root.mainloop()
+
+
