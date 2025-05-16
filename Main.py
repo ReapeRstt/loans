@@ -47,26 +47,26 @@ class Add_en():
 
         entitie_add = Tk()
         entitie_add.title("Добавление юр. лица.")
-        entitie_add['bg'] = '#fafafa'
+        entitie_add['bg'] = '#d7cecc'
         entitie_add.geometry('350x230')
         entitie_add.resizable(width=False, height=False)
 
-        name_label = Label(entitie_add, text="Название", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        name_label = Label(entitie_add, text="Название", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         name_label.pack()
-        name_entry = Entry(entitie_add)
+        name_entry = Entry(entitie_add, bg='#f0f6f6')
         name_entry.pack()
 
-        address_label = Label(entitie_add, text="Адрес", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        address_label = Label(entitie_add, text="Адрес", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         address_label.pack()
-        address_entry = Entry(entitie_add)
+        address_entry = Entry(entitie_add, bg='#f0f6f6')
         address_entry.pack()
 
-        phone_label = Label(entitie_add, text="Номер телефона", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        phone_label = Label(entitie_add, text="Номер телефона", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         phone_label.pack()
-        phone_entry = Entry(entitie_add)
+        phone_entry = Entry(entitie_add, bg='#f0f6f6')
         phone_entry.pack()
 
-        add_button = Button(entitie_add, text="Добавить в базу данных", command=add_to_db)
+        add_button = Button(entitie_add, text="Добавить в базу данных", command=add_to_db, bg='#f0f6f6')
         add_button.pack(padx=10, pady=8)
 
 
@@ -75,36 +75,36 @@ class Add_lo():
         # Создаем окно
         self.loan_add = Tk()
         self.loan_add.title("Добавление кредита.")
-        self.loan_add['bg'] = '#fafafa'
+        self.loan_add['bg'] = '#d7cecc'
         self.loan_add.geometry('350x300')
         self.loan_add.resizable(width=False, height=False)
 
         # Создаем элементы интерфейса
-        en_id_label = Label(self.loan_add, text="ID лица", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        en_id_label = Label(self.loan_add, text="ID лица", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         en_id_label.pack()
-        self.en_id_entry = Entry(self.loan_add)
+        self.en_id_entry = Entry(self.loan_add, bg='#f0f6f6')
         self.en_id_entry.pack()
 
         # Если передан ID юрлица, подставляем его в поле
         if entity_id:
             self.en_id_entry.insert(0, entity_id)
 
-        amount_label = Label(self.loan_add, text="Сумма", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        amount_label = Label(self.loan_add, text="Сумма", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         amount_label.pack()
-        self.amount_entry = Entry(self.loan_add)
+        self.amount_entry = Entry(self.loan_add, bg='#f0f6f6')
         self.amount_entry.pack()
 
-        percent_label = Label(self.loan_add, text="Процент", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        percent_label = Label(self.loan_add, text="Процент", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         percent_label.pack()
-        self.percent_entry = Entry(self.loan_add)
+        self.percent_entry = Entry(self.loan_add, bg='#f0f6f6')
         self.percent_entry.pack()
 
-        term_label = Label(self.loan_add, text="Срок", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+        term_label = Label(self.loan_add, text="Срок", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         term_label.pack()
-        self.term_entry = Entry(self.loan_add)
+        self.term_entry = Entry(self.loan_add, bg='#f0f6f6')
         self.term_entry.pack()
 
-        add_button = Button(self.loan_add, text="Добавить в базу данных", command=self.add_to_db)
+        add_button = Button(self.loan_add, text="Добавить в базу данных", command=self.add_to_db, bg='#f0f6f6')
         add_button.pack(padx=10, pady=8)
 
     def calculate_payments(self, amount, percent, term):
@@ -743,29 +743,29 @@ class Show():
 
             entitie_upd = Tk()
             entitie_upd.title("Изменение юр. лица.")
-            entitie_upd['bg'] = '#fafafa'
+            entitie_upd['bg'] = '#d7cecc'
             entitie_upd.geometry('350x230')
             entitie_upd.resizable(width=False, height=False)
 
-            name_label = Label(entitie_upd, text="Название", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            name_label = Label(entitie_upd, text="Название", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             name_label.pack()
-            name_entry = Entry(entitie_upd)
+            name_entry = Entry(entitie_upd, bg='#f0f6f6')
             name_entry.pack()
             name_entry.insert(0, en_name)
 
-            address_label = Label(entitie_upd, text="Адрес", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            address_label = Label(entitie_upd, text="Адрес", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             address_label.pack()
-            address_entry = Entry(entitie_upd)
+            address_entry = Entry(entitie_upd, bg='#f0f6f6')
             address_entry.pack()
             address_entry.insert(0, en_address)
 
-            phone_label = Label(entitie_upd, text="Номер телефона", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            phone_label = Label(entitie_upd, text="Номер телефона", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             phone_label.pack()
-            phone_entry = Entry(entitie_upd)
+            phone_entry = Entry(entitie_upd, bg='#f0f6f6')
             phone_entry.pack()
             phone_entry.insert(0, en_phone)
 
-            add_button = Button(entitie_upd, text="Обновить", command=update)
+            add_button = Button(entitie_upd, text="Обновить", command=update, bg='#f0f6f6')
             add_button.pack(padx=10, pady=8)
 
         def update_lo():
@@ -830,141 +830,164 @@ class Show():
 
             loan_upd = Tk()
             loan_upd.title("Изменение кредита.")
-            loan_upd['bg'] = '#fafafa'
+            loan_upd['bg'] = '#d7cecc'
             loan_upd.geometry('350x300')
             loan_upd.resizable(width=False, height=False)
 
-            en_id_label = Label(loan_upd, text="ID лица", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            en_id_label = Label(loan_upd, text="ID лица", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             en_id_label.pack()
-            en_id_entry = Entry(loan_upd)
+            en_id_entry = Entry(loan_upd, bg='#f0f6f6')
             en_id_entry.pack()
             en_id_entry.insert(0, en_id)
 
-            amount_label = Label(loan_upd, text="Сумма", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            amount_label = Label(loan_upd, text="Сумма", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             amount_label.pack()
-            amount_entry = Entry(loan_upd)
+            amount_entry = Entry(loan_upd, bg='#f0f6f6')
             amount_entry.pack()
             amount_entry.insert(0, amount)
 
-            percent_label = Label(loan_upd, text="Процент", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            percent_label = Label(loan_upd, text="Процент", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             percent_label.pack()
-            percent_entry = Entry(loan_upd)
+            percent_entry = Entry(loan_upd, bg='#f0f6f6')
             percent_entry.pack()
             percent_entry.insert(0, percent)
 
-            term_label = Label(loan_upd, text="Срок", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+            term_label = Label(loan_upd, text="Срок", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             term_label.pack()
-            term_entry = Entry(loan_upd)
+            term_entry = Entry(loan_upd, bg='#f0f6f6')
             term_entry.pack()
             term_entry.insert(0, term)
 
-            add_button = Button(loan_upd, text="Обновить", command=update)
+            add_button = Button(loan_upd, text="Обновить", command=update, bg='#f0f6f6')
             add_button.pack(padx=10, pady=8)
 
         show = Tk()
         show.title("Просмотр записей.")
-        show['bg'] = '#fafafa'
+        show['bg'] = '#d7cecc'
         show.geometry('800x350')
         show.resizable(width=False, height=False)
 
+        # Главный контейнер с Notebook
         tab_control = ttk.Notebook(show)
+        tab_control.place(relwidth=1.0, relheight=1.0)
 
-        tab1 = ttk.Frame(tab_control)
-        tab2 = ttk.Frame(tab_control)
+        # Вкладка "Лица"
+        tab1 = Frame(tab_control, bg='#d7cecc')
         tab_control.add(tab1, text='Лица')
-        tab_control.add(tab2, text='Кредиты')
 
-        lb1 = Label(tab1, text='Лица', font='Arial 12 bold')
-        lb1.grid(column=0, row=0, padx=8, pady=8)
+        # Вкладка "Кредиты"
+        tab2 = Frame(tab_control, bg='#d7cecc')
+        tab_control.add(tab2, text='Лица')
 
+        # Подключение к БД
         conn = mysql.connector.connect(
             host='localhost',
             user='root',
             password='22345267',
             database='loan_db'
         )
-
-        # Создание объекта cursor для выполнения SQL-запросов
         cursor = conn.cursor()
 
-        # Выполнение SQL-запроса для выборки записей из таблицы
-        cursor.execute("SELECT * FROM legal_entities")
+        # Заголовок
+        lb1 = Label(tab1, text='Лица', font='Arial 12 bold', bg='#d7cecc')
+        lb1.place(relx=0.02, rely=0.02)
 
-        # Получение всех выбранных записей
+        # Таблица
+        cursor.execute("SELECT * FROM legal_entities")
         en_lst = cursor.fetchall()
 
         heads = ['id', 'name', 'address', 'phone number']
-        table1 = ttk.Treeview(tab1, show='headings')
+        table1 = ttk.Treeview(tab1, show='headings', height=10)
         table1['columns'] = heads
-        for row  in en_lst:
+        for row in en_lst:
             table1.insert('', tkinter.END, values=row)
         for header in heads:
             table1.heading(header, text=header, anchor='center')
             table1.column(header, anchor='center')
-        table1.column('id', stretch=NO, width= 50)
-        table1.column('name', stretch=NO, width=120)
-        table1.column('address', stretch=NO, width=200)
-        table1.column('phone number', stretch=NO, width=120)
-        table1.grid(column=0, row=1, padx=8, pady=8)
+        table1.column('id', width=50)
+        table1.column('name', width=120)
+        table1.column('address', width=200)
+        table1.column('phone number', width=120)
+        table1.place(relx=0.02, rely=0.1, relwidth=0.96)
 
-        open_en_add = Button(tab1, text='Добавить', command=open_en_add)
-        open_en_add.grid(column=1, row=1, padx=8, pady=8)
-        en_del = Button(tab1, text='Удалить', command=delete_en)
-        en_del.grid(column=3, row=1, padx=8, pady=8)
-        en_change = Button(tab1, text='Изменить',command=update_en)
-        en_change.grid(column=2, row=1, padx=8, pady=8)
-        en_update = Button(tab1, text='Обновить', command=update_treeview)
-        en_update.grid(column=1, row=2, padx=8, pady=8)
-        en_searchfield = Entry(tab1)
-        en_searchfield.grid(column=2, row=2, padx=8, pady=8)
-        en_searchbutton = Button(tab1, text='Поиск', command=search_en)
-        en_searchbutton.grid(column=3, row=2, padx=8, pady=8)
+        control_frame1 = Frame(tab1, bg='#d7cecc')
+        control_frame1.place(relx=0.02, rely=0.8, relwidth=0.96)
 
-        lb2 = Label(tab2, text='Кредиты', font='Arial 12 bold')
-        lb2.grid(column=0, row=0, padx=8, pady=8)
+        # Кнопки управления
+        buttons_frame1 = Frame(control_frame1, bg='#d7cecc')
+        buttons_frame1.pack(side=LEFT)
 
-        # Создание объекта cursor для выполнения SQL-запросов
-        cursor = conn.cursor()
+        open_en_add = Button(buttons_frame1, text='Добавить', command=open_en_add, bg='#f0f6f6')
+        open_en_add.pack(side=LEFT, padx=5, pady=20)
+        en_change = Button(buttons_frame1, text='Изменить', command=update_en, bg='#f0f6f6')
+        en_change.pack(side=LEFT, padx=5, pady=20)
+        en_del = Button(buttons_frame1, text='Удалить', command=delete_en, bg='#f0f6f6')
+        en_del.pack(side=LEFT, padx=5, pady=20)
 
-        # Выполнение SQL-запроса для выборки записей из таблицы
+        # Блок поиска
+        search_frame1 = Frame(control_frame1, bg='#d7cecc')
+        search_frame1.pack(side=RIGHT)
+
+        en_update = Button(search_frame1, text='Обновить', command=update_treeview, bg='#f0f6f6')
+        en_update.pack(side=RIGHT, padx=5, pady=20)
+        en_searchbutton = Button(search_frame1, text='Поиск', command=search_en, bg='#f0f6f6')
+        en_searchbutton.pack(side=RIGHT, padx=5, pady=20)
+        en_searchfield = Entry(search_frame1, width=40, bg='#f0f6f6')
+        en_searchfield.pack(side=RIGHT, padx=5, pady=20)
+
+        # Заголовок
+        lb2 = Label(tab2, text='Кредиты', font='Arial 12 bold', bg='#d7cecc')
+        lb2.place(relx=0.02, rely=0.02)
+
+        # Таблица
         cursor.execute("SELECT * FROM loans")
-
-        # Получение всех выбранных записей
         lo_lst = cursor.fetchall()
 
         heads = ['loan id', 'entitie id', 'amount', 'percent', 'term']
-        table2 = ttk.Treeview(tab2, show='headings')
+        table2 = ttk.Treeview(tab2, show='headings', height=10)
         table2['columns'] = heads
         for row in lo_lst:
             table2.insert('', tkinter.END, values=row)
         for header in heads:
             table2.heading(header, text=header, anchor='center')
             table2.column(header, anchor='center')
-        table2.column('loan id', stretch=NO, width=70)
-        table2.column('entitie id', stretch=NO, width=70)
-        table2.column('amount', stretch=NO, width=150)
-        table2.column('percent', stretch=NO, width=70)
-        table2.column('term', stretch=NO, width=120)
-        table2.grid(column=0, row=1, padx=8, pady=8)
+        table2.column('loan id', width=70)
+        table2.column('entitie id', width=70)
+        table2.column('amount', width=150)
+        table2.column('percent', width=70)
+        table2.column('term', width=120)
+        table2.place(relx=0.02, rely=0.1, relwidth=0.96)
 
-        open_lo_add = Button(tab2, text='Добавить', command=open_lo_add)
-        open_lo_add.grid(column=1, row=1, padx=8, pady=8)
-        lo_change = Button(tab2, text='Изменить', command=update_lo)
-        lo_change.grid(column=2, row=1, padx=8, pady=8)
-        lo_del = Button(tab2, text='Удалить', command=delete_lo)
-        lo_del.grid(column=3, row=1, padx=8, pady=8)
-        lo_update = Button(tab2, text='Обновить', command=update_treeview)
-        lo_update.grid(column=1, row=2, padx=8, pady=8)
-        lo_searchfield = Entry(tab2)
-        lo_searchfield.grid(column=2, row=2, padx=8, pady=8)
-        lo_searchbutton = Button(tab2, text='Поиск', command=search_lo)
-        lo_searchbutton.grid(column=3, row=2, padx=8, pady=8)
-        lo_export = Button(tab2, text='Рассчитать', command=export_payment)
-        lo_export.grid(column=1, row=0, padx=8, pady=8)
+        # Контейнер для кнопок управления и поиска
+        control_frame2 = Frame(tab2, bg='#d7cecc')
+        control_frame2.place(relx=0.02, rely=0.8, relwidth=0.96)
 
-        tab_control.pack(expand=1, fill='both')
+        # Кнопки управления
+        buttons_frame2 = Frame(control_frame2, bg='#d7cecc')
+        buttons_frame2.pack(side=LEFT)
 
+        open_lo_add = Button(buttons_frame2, text='Добавить', command=open_lo_add, bg='#f0f6f6')
+        open_lo_add.pack(side=LEFT, padx=5, pady=20)
+        lo_change = Button(buttons_frame2, text='Изменить', command=update_lo, bg='#f0f6f6')
+        lo_change.pack(side=LEFT, padx=5, pady=20)
+        lo_del = Button(buttons_frame2, text='Удалить', command=delete_lo, bg='#f0f6f6')
+        lo_del.pack(side=LEFT, padx=5, pady=20)
+        lo_export = Button(buttons_frame2, text='Рассчитать', command=export_payment, bg='#f0f6f6')
+        lo_export.pack(side=LEFT, padx=5, pady=20)
 
+        # Блок поиска
+        search_frame2 = Frame(control_frame2, bg='#d7cecc')
+        search_frame2.pack(side=RIGHT)
+
+        lo_update = Button(search_frame2, text='Обновить', command=update_treeview, bg='#f0f6f6')
+        lo_update.pack(side=RIGHT, padx=5, pady=20)
+        lo_searchbutton = Button(search_frame2, text='Поиск', command=search_lo, bg='#f0f6f6')
+        lo_searchbutton.pack(side=RIGHT, padx=5, pady=20)
+        lo_searchfield = Entry(search_frame2, width=40, bg='#f0f6f6')
+        lo_searchfield.pack(side=RIGHT, padx=5, pady=20)
+
+        # Закрытие соединения
+        conn.close()
 
 def login():
     username = login_entry.get()
@@ -995,26 +1018,26 @@ def login():
 
 root = Tk()
 root.title("Авторизация.")
-root['bg'] = '#fafafa'
+root['bg'] = '#d7cecc'
 root.geometry('450x200')
 root.resizable(width=False, height=False)
 
-main_label = Label(root, text='Авторизация', font='Arial 15 bold', bg='#fafafa')
+main_label = Label(root, text='Авторизация', font='Arial 15 bold', bg='#d7cecc')
 main_label.pack()
 
-login_label = Label(root, text="Логин", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+login_label = Label(root, text="Логин", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
 login_label.pack()
 
 login_entry = Entry(root, bg='#fafafa', font='arial 12')
 login_entry.pack()
 
-password_label = Label(root, text="Пароль", font='Arial 11 bold', bg='#fafafa', padx=10, pady=8)
+password_label = Label(root, text="Пароль", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
 password_label.pack()
 
 password_entry = Entry(root, show="*", bg='#fafafa', font='arial 12')
 password_entry.pack()
 
-login_button = Button(root, text="Войти", command=login)
+login_button = Button(root, text="Войти", command=login, bg='#f0f6f6')
 login_button.pack(padx=10, pady=8)
 
 root.mainloop()
