@@ -15,6 +15,7 @@ class Add_en():
             name = name_entry.get()
             address = address_entry.get()
             phone = phone_entry.get()
+            inn = inn_entry.get()
 
             # Установка соединения с базой данных MySQL
             conn = mysql.connector.connect(
@@ -29,9 +30,9 @@ class Add_en():
 
             # Выполнение SQL-запроса для добавления данных в таблицу legal_entities
             cursor.execute(
-                "INSERT INTO legal_entities (en_name, address, phone_number) "
-                "VALUES (%s, %s, %s)",
-                (name, address, phone))
+                "INSERT INTO legal_entities (en_name, address, phone_number, inn) "
+                "VALUES (%s, %s, %s, %s)",
+                (name, address, phone, inn))
 
             # Применение изменений
             conn.commit()
@@ -42,13 +43,32 @@ class Add_en():
             # Закрытие соединения с базой данных
             conn.close()
 
-            messagebox.showinfo("Добавление.", "Запись занесена в базу данных.")
+            messagebox.showinfo("Добавление.", "Запись занесена в базу данные.")
 
+        def format_phone(event=None):
+            # Форматирует номер по маске ##-##-##
+            current = phone_entry.get().replace("-", "")
+            formatted = ""
+
+            if len(current) > 0:
+                formatted = current[:2]  # Первые 2 цифры
+            if len(current) > 2:
+                formatted += "-" + current[2:4]  # Добавляем - и следующие 2 цифры
+            if len(current) > 4:
+                formatted += "-" + current[4:6]  # Добавляем - и последние 2 цифры
+
+            # Обновляем поле ввода
+            phone_entry.delete(0, "end")
+            phone_entry.insert(0, formatted)
+
+        def validate_inn_input(new_value):
+            "Проверка ввода ИНН (только цифры, максимум 12 символов)"
+            return new_value.isdigit() and len(new_value) <= 12 or new_value == ""
 
         entitie_add = Tk()
         entitie_add.title("Добавление юр. лица.")
         entitie_add['bg'] = '#d7cecc'
-        entitie_add.geometry('350x230')
+        entitie_add.geometry('350x300')
         entitie_add.resizable(width=False, height=False)
 
         name_label = Label(entitie_add, text="Название", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
@@ -64,7 +84,14 @@ class Add_en():
         phone_label = Label(entitie_add, text="Номер телефона", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
         phone_label.pack()
         phone_entry = Entry(entitie_add, bg='#f0f6f6')
+        phone_entry.bind("<KeyRelease>", format_phone)
         phone_entry.pack()
+
+        inn_label = Label(entitie_add, text="ИНН", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
+        inn_label.pack()
+        inn_entry = Entry(entitie_add, bg='#f0f6f6', validate="key")
+        inn_entry['validatecommand'] = (entitie_add.register(validate_inn_input), '%P')
+        inn_entry.pack()
 
         add_button = Button(entitie_add, text="Добавить в базу данных", command=add_to_db, bg='#f0f6f6')
         add_button.pack(padx=10, pady=8)
@@ -217,8 +244,7 @@ class Add_lo():
                 client_data[0],
                 f"адрес: {client_data[1]}",
                 f"телефон: {client_data[2]}",
-                f"ИНН {random.randint(1000000000, 9999999999)}",  # Генерация случайного ИНН
-                f"р/с {random.randint(40702810, 40702899)}{random.randint(10000000, 99999999)}"
+                f"ИНН {client_data[3]}",
             ]
             for line in debtor:
                 doc.add_paragraph(line, style='List Bullet 2')
@@ -307,6 +333,7 @@ class Add_lo():
         amount = self.amount_entry.get()
         percent = self.percent_entry.get()
         term = self.term_entry.get()
+        start_date = datetime.now().strftime("%Y-%m-%d")
 
         try:
             # Подключение к базе данных
@@ -329,9 +356,9 @@ class Add_lo():
 
             # Добавление кредита в базу данных
             cursor.execute(
-                "INSERT INTO loans (entitie_id, amount, percent, term) "
-                "VALUES (%s, %s, %s, %s)",
-                (en_id, amount, percent, term))
+                "INSERT INTO loans (entitie_id, amount, percent, start_date,  term) "
+                "VALUES (%s, %s, %s, %s, %s)",
+                (en_id, amount, percent, start_date, term))
 
             # Получаем ID созданного кредита
             loan_id = cursor.lastrowid
@@ -339,7 +366,7 @@ class Add_lo():
 
             # Получаем данные клиента для договора
             cursor.execute("""
-                SELECT en_name, address, phone_number 
+                SELECT en_name, address, phone_number, inn 
                 FROM legal_entities 
                 WHERE entitie_id = %s
             """, (en_id,))
@@ -561,10 +588,9 @@ class Show():
                 # Создание объекта cursor для выполнения SQL-запросов
                 cursor = conn.cursor()
 
-                query = "SELECT * FROM legal_entities WHERE entitie_id LIKE %s OR en_name LIKE %s OR address LIKE %s OR phone_number LIKE %s"
+                query = "SELECT * FROM legal_entities WHERE entitie_id LIKE %s OR en_name LIKE %s OR address LIKE %s"
                 cursor.execute(query, (
-                    '%' + search_value + '%', '%' + search_value + '%', '%' + search_value + '%',
-                    '%' + search_value + '%'))
+                    '%' + search_value + '%', '%' + search_value + '%', '%' + search_value + '%'))
 
                 # Получение всех выбранных записей
                 serched_en = cursor.fetchall()
@@ -707,6 +733,7 @@ class Show():
             en_name = item_values[1]
             en_address = item_values[2]
             en_phone = item_values[3]
+            en_inn = item_values[4]
 
             def update():
                     responce = messagebox.askyesno(title='Подтверждение', message='Вы действительно хотите изменить запись?')
@@ -741,10 +768,30 @@ class Show():
 
                         entitie_upd.destroy()
 
+            def format_phone(event=None):
+                # Форматирует номер по маске ##-##-##
+                current = phone_entry.get().replace("-", "")
+                formatted = ""
+
+                if len(current) > 0:
+                    formatted = current[:2]  # Первые 2 цифры
+                if len(current) > 2:
+                    formatted += "-" + current[2:4]  # Добавляем - и следующие 2 цифры
+                if len(current) > 4:
+                    formatted += "-" + current[4:6]  # Добавляем - и последние 2 цифры
+
+                # Обновляем поле ввода
+                phone_entry.delete(0, "end")
+                phone_entry.insert(0, formatted)
+
+            def validate_inn_input(new_value):
+                "Проверка ввода ИНН (только цифры, максимум 12 символов)"
+                return new_value.isdigit() and len(new_value) <= 12 or new_value == ""
+
             entitie_upd = Tk()
             entitie_upd.title("Изменение юр. лица.")
             entitie_upd['bg'] = '#d7cecc'
-            entitie_upd.geometry('350x230')
+            entitie_upd.geometry('350x300')
             entitie_upd.resizable(width=False, height=False)
 
             name_label = Label(entitie_upd, text="Название", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
@@ -762,8 +809,16 @@ class Show():
             phone_label = Label(entitie_upd, text="Номер телефона", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
             phone_label.pack()
             phone_entry = Entry(entitie_upd, bg='#f0f6f6')
+            phone_entry.bind("<KeyRelease>", format_phone)
             phone_entry.pack()
             phone_entry.insert(0, en_phone)
+
+            inn_label = Label(entitie_upd, text="ИНН", font='Arial 11 bold', bg='#d7cecc', padx=10, pady=8)
+            inn_label.pack()
+            inn_entry = Entry(entitie_upd, bg='#f0f6f6', validate="key")
+            inn_entry['validatecommand'] = (entitie_upd.register(validate_inn_input), '%P')
+            inn_entry.pack()
+            inn_entry.insert(0, en_inn)
 
             add_button = Button(entitie_upd, text="Обновить", command=update, bg='#f0f6f6')
             add_button.pack(padx=10, pady=8)
@@ -782,7 +837,7 @@ class Show():
             en_id = item_values[1]
             amount = item_values[2]
             percent = item_values[3]
-            term = item_values[4]
+            term = item_values[5]
 
             def update():
                     upd_en_id = en_id_entry.get()
@@ -877,7 +932,7 @@ class Show():
 
         # Вкладка "Кредиты"
         tab2 = Frame(tab_control, bg='#d7cecc')
-        tab_control.add(tab2, text='Лица')
+        tab_control.add(tab2, text='Кредиты')
 
         # Подключение к БД
         conn = mysql.connector.connect(
@@ -896,7 +951,7 @@ class Show():
         cursor.execute("SELECT * FROM legal_entities")
         en_lst = cursor.fetchall()
 
-        heads = ['id', 'name', 'address', 'phone number']
+        heads = ['id', 'name', 'address', 'phone number', 'INN']
         table1 = ttk.Treeview(tab1, show='headings', height=10)
         table1['columns'] = heads
         for row in en_lst:
@@ -908,6 +963,7 @@ class Show():
         table1.column('name', width=120)
         table1.column('address', width=200)
         table1.column('phone number', width=120)
+        table1.column('INN', width=120)
         table1.place(relx=0.02, rely=0.1, relwidth=0.96)
 
         control_frame1 = Frame(tab1, bg='#d7cecc')
@@ -943,7 +999,7 @@ class Show():
         cursor.execute("SELECT * FROM loans")
         lo_lst = cursor.fetchall()
 
-        heads = ['loan id', 'entitie id', 'amount', 'percent', 'term']
+        heads = ['loan id', 'entitie id', 'amount', 'percent', 'start date', 'term']
         table2 = ttk.Treeview(tab2, show='headings', height=10)
         table2['columns'] = heads
         for row in lo_lst:
@@ -955,6 +1011,7 @@ class Show():
         table2.column('entitie id', width=70)
         table2.column('amount', width=150)
         table2.column('percent', width=70)
+        table2.column('start date', width=100)
         table2.column('term', width=120)
         table2.place(relx=0.02, rely=0.1, relwidth=0.96)
 
