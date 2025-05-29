@@ -404,7 +404,7 @@ class Show():
             loan_id = loan_data[0]
             amount = float(loan_data[2])
             percent = float(loan_data[3])
-            term = int(loan_data[4])
+            term = int(loan_data[5])
 
             try:
                 # Получаем данные клиента
@@ -556,7 +556,11 @@ class Show():
             cursor2 = conn.cursor()
 
             # Выполнение SQL-запроса для выборки записей из таблицы
-            cursor2.execute("SELECT * FROM loans")
+            cursor2.execute("""
+            SELECT l.loan_id, le.en_name, l.amount, l.percent, l.start_date, l.term 
+            FROM loans l
+            JOIN legal_entities le ON l.entitie_id = le.entitie_id
+            """)
 
             # Получение всех выбранных записей
             lo_lst_upd = cursor2.fetchall()
@@ -951,7 +955,7 @@ class Show():
         cursor.execute("SELECT * FROM legal_entities")
         en_lst = cursor.fetchall()
 
-        heads = ['id', 'name', 'address', 'phone number', 'INN']
+        heads = ['id', 'Название', 'Адрес', 'Телефонный номер', 'ИНН']
         table1 = ttk.Treeview(tab1, show='headings', height=10)
         table1['columns'] = heads
         for row in en_lst:
@@ -960,10 +964,10 @@ class Show():
             table1.heading(header, text=header, anchor='center')
             table1.column(header, anchor='center')
         table1.column('id', width=50)
-        table1.column('name', width=120)
-        table1.column('address', width=200)
-        table1.column('phone number', width=120)
-        table1.column('INN', width=120)
+        table1.column('Название', width=120)
+        table1.column('Адрес', width=200)
+        table1.column('Телефонный номер', width=120)
+        table1.column('ИНН', width=120)
         table1.place(relx=0.02, rely=0.1, relwidth=0.96)
 
         control_frame1 = Frame(tab1, bg='#d7cecc')
@@ -996,10 +1000,14 @@ class Show():
         lb2.place(relx=0.02, rely=0.02)
 
         # Таблица
-        cursor.execute("SELECT * FROM loans")
+        cursor.execute("""
+            SELECT l.loan_id, le.en_name, l.amount, l.percent, l.start_date, l.term 
+            FROM loans l
+            JOIN legal_entities le ON l.entitie_id = le.entitie_id
+        """)
         lo_lst = cursor.fetchall()
 
-        heads = ['loan id', 'entitie id', 'amount', 'percent', 'start date', 'term']
+        heads = ['id кредита', 'Заемщик', 'Сумма', 'Процент', 'Дата открытия', 'Срок']
         table2 = ttk.Treeview(tab2, show='headings', height=10)
         table2['columns'] = heads
         for row in lo_lst:
@@ -1007,12 +1015,12 @@ class Show():
         for header in heads:
             table2.heading(header, text=header, anchor='center')
             table2.column(header, anchor='center')
-        table2.column('loan id', width=70)
-        table2.column('entitie id', width=70)
-        table2.column('amount', width=150)
-        table2.column('percent', width=70)
-        table2.column('start date', width=100)
-        table2.column('term', width=120)
+        table2.column('id кредита', width=70)
+        table2.column('Заемщик', width=150)  # Шире для названий
+        table2.column('Сумма', width=150)
+        table2.column('Процент', width=70)
+        table2.column('Дата открытия', width=100)
+        table2.column('Срок', width=120)
         table2.place(relx=0.02, rely=0.1, relwidth=0.96)
 
         # Контейнер для кнопок управления и поиска
